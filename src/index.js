@@ -104,18 +104,33 @@ function initBuffersTriangle() {
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 }
 
+
 function initBuffersSquare() {
 	let squareVerticesBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, squareVerticesBuffer);
 	let vertices = [
-		-0.5, 0.5,  1.0, 0.0, 0.0,
-		 0.5, 0.5,  1.0, 0.0, 0.0,
-		-0.5, -0.5, 1.0, 0.0, 0.0,
-		 0.5, 0.5,  0.0, 0.0, 1.0,
-		-0.5, -0.5, 0.0, 0.0, 1.0,
-		 0.5, -0.5, 0.0, 0.0, 1.0,
+		-0.5, 0.5,
+		0.5, 0.5,
+		-0.5, -0.5,
+		0.5, 0.5,
+		-0.5, -0.5,
+		0.5, -0.5,
 	];
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+	gl.vertexAttribPointer(vertexPositionAttribute, 2, gl.FLOAT, false, 0, 0);
+	let colors = [
+		1.0, 0.0, 0.0,
+		1.0, 0.0, 0.0,
+		1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0,
+		0.0, 0.0, 1.0,
+		0.0, 0.0, 1.0,
+	];
+	let colorsBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, colorsBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+	gl.vertexAttribPointer(vertColorAttribute, 3, gl.FLOAT, false, 0, 0);
+
 }
 
 const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
@@ -159,4 +174,4 @@ vertColorAttribute = gl.getAttribLocation(shaderProgramSquare, "vertColor");
 gl.enableVertexAttribArray(vertexPositionAttribute);
 gl.enableVertexAttribArray(vertColorAttribute);
 gl.useProgram(shaderProgramSquare);
-drawScene()
+gl.drawArrays(gl.TRIANGLES, 0, 6);
